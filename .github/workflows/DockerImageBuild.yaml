@@ -13,9 +13,9 @@ jobs:
         - name: Login to DockerHub Registry
           run: echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u cloudnat --password-stdin
         - name: Build the latest Docker image
-          run: docker build . --file Dockerfile --tag cloudnat/red-hoc:latest
+          run: docker build . --file Dockerfile --tag cloudnat/black-hoc:latest
         - name: Push the latest Docker image
-          run: docker push cloudnat/red-hoc:latest
+          run: docker push cloudnat/black-hoc:latest
       
 
         - name: Configure AWS credentials
