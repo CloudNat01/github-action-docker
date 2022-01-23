@@ -10,6 +10,6 @@ jobs:
         - name: Login to DockerHub Registry
           run: echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u cloudnat --password-stdin
         - name: Build the latest Docker image
-          run: docker build . --file Dockerfile --tag cloudnat/new-port:latest
+          run: docker build . --file Dockerfile --tag cloudnat/blue-hoc:latest
         - name: Push the latest Docker image
-          run: docker push cloudnat/new-port:latest
+          run: docker push cloudnat/blue-hoc:latest
