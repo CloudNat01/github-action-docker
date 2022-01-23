@@ -1,7 +1,6 @@
 name: Docker Image CI
 
 on: 
-  push:
   pull_request_review:
     branches:  [ master]
           
@@ -28,6 +27,6 @@ jobs:
         - name: Login to DockerHub Registry
           run: echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u cloudnat --password-stdin
         - name: Build the latest Docker image
-          run: docker build . --file Dockerfile --tag cloudnat/purple-hoc:latest
+          run: docker build . --file Dockerfile --tag cloudnat/red-hoc:latest
         - name: Push the latest Docker image
-          run: docker push cloudnat/purple-hoc:latest
+          run: docker push cloudnat/red-hoc:latest
