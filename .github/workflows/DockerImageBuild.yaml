@@ -1,8 +1,26 @@
 name: Docker Image CI
 
-on: pull_request_review
+on: 
+  push:
+  pull_request_review:
+    branches:  [ master]
+          
                  
 jobs: 
+  lint:
+    name: Lint Code Base
+    runs-on: ubuntu-latest
+    steps: 
+     - name: Checkout
+       uses: actions/checkout@master
+     - name: lint
+       uses: github/super-linter@v4
+       with:
+          target: Dockerfile
+       env:
+         VALIDATE_ALL_CODEBASE: false
+         DEFAULT_BRANCH: master
+         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   build: 
      runs-on: ubuntu-latest
      steps:
@@ -10,17 +28,6 @@ jobs:
         - name: Login to DockerHub Registry
           run: echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u cloudnat --password-stdin
         - name: Build the latest Docker image
-          run: docker build . --file Dockerfile --tag cloudnat/green-hoc:latest
+          run: docker build . --file Dockerfile --tag cloudnat/purple-hoc:latest
         - name: Push the latest Docker image
-          run: docker push cloudnat/green-hoc:latest
-        - name: Post to a Slack channel
-          id: slack
-          uses: slackapi/slack-github-action@v1.17.0
-          with:
-            # Slack channel id, channel name, or user id to post message.
-            # See also: https://api.slack.com/methods/chat.postMessage#channels
-            channel-id: 'C02V0U9NF6J'
-            # For posting a simple plain text message
-            slack-message: "GitHub build result: ${{ job.status }}\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}"
-          env:
-            SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+          run: docker push cloudnat/purple-hoc:latest
